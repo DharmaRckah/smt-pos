@@ -5,7 +5,11 @@ const cors = require("cors");
 const dotanv = require("dotenv");
 const { bgCyan } = require("colors");
 require("colors");
+
 const path = require("path");
+
+const { fileURLToPath } = require("url");
+const { dirname } = require("path");
 const connectDb = require("./config/config");
 //dotenv config
 dotanv.config();
@@ -13,6 +17,8 @@ dotanv.config();
 connectDb();
 //rest object
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 //middlwares
 app.use(cors());
@@ -27,8 +33,9 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/bills", require("./routes/billsRoute"));
 
 app.use(express.static(path.join(__dirname, "./client/build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build", "index.html"));
+
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 //port
 const PORT = process.env.PORT || 5000;
