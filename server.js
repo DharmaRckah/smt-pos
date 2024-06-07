@@ -15,8 +15,7 @@ dotanv.config();
 connectDb();
 //rest object
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = dirname(fileURLToPath(import.meta.url)); // Use dirname directly
 
 //middlwares
 app.use(cors());
@@ -30,10 +29,12 @@ app.use("/api/items", require("./routes/itemRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/bills", require("./routes/billsRoute"));
 
-app.use(express.static(path.join(__dirname, "./client/build")));
+// Serve static files from the client/build directory
+app.use(express.static(path.join(__dirname, "client", "build")));
 
+// Route all other requests to the React app's index.html
 app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 //port
 const PORT = process.env.PORT || 5000;
