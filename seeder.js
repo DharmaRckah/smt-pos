@@ -22,3 +22,4 @@ const importData = async () => {
 };
 
 importData();
+//fj
