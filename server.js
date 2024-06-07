@@ -6,7 +6,6 @@ const dotanv = require("dotenv");
 const { bgCyan } = require("colors");
 const path = require("path");
 const { fileURLToPath } = require("url");
-const { dirname } = require("path");
 const connectDb = require("./config/config");
 
 //dotenv config
@@ -15,7 +14,6 @@ dotanv.config();
 connectDb();
 //rest object
 const app = express();
-const __dirname = dirname(fileURLToPath(import.meta.url)); // Use dirname directly
 
 //middlwares
 app.use(cors());
@@ -36,6 +34,7 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
+
 //port
 const PORT = process.env.PORT || 5000;
 
