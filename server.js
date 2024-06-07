@@ -5,6 +5,7 @@ const cors = require("cors");
 const dotanv = require("dotenv");
 const { bgCyan } = require("colors");
 require("colors");
+const path = require("path");
 const connectDb = require("./config/config");
 //dotenv config
 dotanv.config();
@@ -25,8 +26,12 @@ app.use("/api/items", require("./routes/itemRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/bills", require("./routes/billsRoute"));
 
+app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 //port
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 //listen
 app.listen(PORT, () => {
